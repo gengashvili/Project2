@@ -13,6 +13,7 @@ public class RentSteps {
         return this;
     }
 
+
     @Step
     public RentSteps setMaxPrice(String price) {
         rentPage.maxPriceInput.setValue(price);

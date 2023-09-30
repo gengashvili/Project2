@@ -12,8 +12,9 @@ public class TestConfig {
         options.addArguments("start-maximized");
         browserCapabilities = options;
         browserSize = null;
-        timeout = 10000;
+        timeout = 5000;
         holdBrowserOpen = true;
+        fastSetValue = true;
     }
 
     @AfterMethod
