@@ -12,7 +12,7 @@ public class TestConfig {
         options.addArguments("start-maximized");
         browserCapabilities = options;
         browserSize = null;
-        timeout = 5000;
+        timeout = 20000;
         holdBrowserOpen = true;
         fastSetValue = true;
     }

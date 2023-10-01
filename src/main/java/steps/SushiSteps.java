@@ -1,27 +1,29 @@
 package steps;
 
-import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
-import org.testng.asserts.SoftAssert;
+import org.testng.Assert;
 import pages.SushiPage;
+
+import static com.codeborne.selenide.Selenide.*;
 
 public class SushiSteps {
     SushiPage sushiPage = new SushiPage();
-    SoftAssert softAssert = new SoftAssert();
 
     @Step
-    public SushiSteps checkVouchersAreNotSoldOut() {
-        ElementsCollection sushiOffers = sushiPage.sushiOffers;
-        By voucherDiagram = sushiPage.voucherDiagram;
+    public SushiSteps clickOnShare() {
+        sushiPage.shareIcon.click();
+        return this;
+    }
 
-        sushiOffers.stream().forEach(sushiCard -> {
-            String dataWidth = sushiCard.$(voucherDiagram).getAttribute("data-width");
-            softAssert.assertNotEquals(dataWidth, "100");
-        });
+    @Step
+    public SushiSteps validateFacebookWindowAppeared() {
+        switchTo().window(1);
 
-        softAssert.assertAll();
+        String newTabTitle = Selenide.title();
+        closeWindow();
 
+        Assert.assertEquals(newTabTitle, "Facebook");
         return this;
     }
 }
