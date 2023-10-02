@@ -1,23 +1,27 @@
+import data.UserData;
+import data.UserDataProvider;
 import org.testng.annotations.*;
-import steps.HomeSteps;
-import steps.RentSteps;
-import steps.SushiOffersSteps;
-import steps.SushiSteps;
+import steps.*;
+import utils.Helper;
+
+import java.sql.Date;
 
 import static com.codeborne.selenide.Selenide.*;
 
 public class SwoopTest extends TestConfig {
-    HomeSteps homeSteps = new HomeSteps();
+    HeaderSteps headerSteps = new HeaderSteps();
     RentSteps rentSteps = new RentSteps();
     SushiOffersSteps sushiOffersSteps = new SushiOffersSteps();
     SushiSteps sushiSteps = new SushiSteps();
+    DbSteps dbSteps = new DbSteps();
+    SignUpSteps signUpSteps = new SignUpSteps();
 
 
     @Test(priority = 1)
     public void firstTest() {
         open("https://www.swoop.ge/");
 
-        homeSteps.goToRentCategory();
+        headerSteps.goToRentCategory();
 
         rentSteps
                 .scrollToPriceContainer()
@@ -28,11 +32,11 @@ public class SwoopTest extends TestConfig {
         ;
     }
 
-    @Test(priority = 2, invocationCount = 10)
+    @Test(priority = 2)
     public void secondTest() {
         open("https://www.swoop.ge/");
 
-        homeSteps
+        headerSteps
                 .clickOnCategory()
                 .hoverOnKvebaElement()
                 .clickOnSushiElement()
@@ -48,7 +52,7 @@ public class SwoopTest extends TestConfig {
     public void thirdTest() {
         open("https://www.swoop.ge/");
 
-        homeSteps
+        headerSteps
                 .clickOnCategory()
                 .hoverOnKvebaElement()
                 .clickOnSushiElement()
@@ -64,7 +68,7 @@ public class SwoopTest extends TestConfig {
     public void fourthTest() {
         open("https://www.swoop.ge/");
 
-        homeSteps
+        headerSteps
                 .clickOnCategory()
                 .hoverOnKvebaElement()
                 .clickOnSushiElement()
@@ -77,5 +81,38 @@ public class SwoopTest extends TestConfig {
         ;
     }
 
+    @Test(priority = 5, dataProvider = "userDataProvider", dataProviderClass = UserDataProvider.class)
+    public void fifthTest
+            (
+            String firstName,
+            String lastName,
+            String email,
+            String phone,
+            String dateOfBirth,
+            String password
+            )
+    {
+        dbSteps.insertNewUser();
+
+        open("https://www.swoop.ge/");
+
+        headerSteps.clickOnSignIn();
+
+        signUpSteps
+                .clickOnRegister()
+                .setFirstName(firstName)
+                .setLastName(lastName)
+                .setEmail(email)
+                .setPhone(phone)
+                .setDateOfBirth(dateOfBirth)
+                .setPassword(password)
+                .setConfirmPassword(password)
+                .acceptTerms()
+                .clickOnRegisterSubmitButton()
+                .validateErrorMessage()
+        ;
+
+
+    }
 
 }

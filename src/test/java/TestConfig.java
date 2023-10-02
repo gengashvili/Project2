@@ -7,7 +7,7 @@ import static com.codeborne.selenide.Configuration.*;
 public class TestConfig {
 
     @BeforeMethod
-    public void setUp() {
+    public void setUpMethod() {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("start-maximized");
         browserCapabilities = options;
@@ -15,6 +15,7 @@ public class TestConfig {
         timeout = 20000;
         holdBrowserOpen = true;
         fastSetValue = true;
+        pageLoadTimeout = 20000;
     }
 
     @AfterMethod
