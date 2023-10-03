@@ -3,7 +3,9 @@ package steps;
 import com.codeborne.selenide.*;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import pages.RentPage;
+import utils.Helper;
 
 import static com.codeborne.selenide.Selenide.*;
 
@@ -11,39 +13,38 @@ public class RentSteps {
     RentPage rentPage = new RentPage();
 
 
-    @Step
+    @Step("scroll to price container")
     public RentSteps scrollToPriceContainer() {
-        rentPage.priceContainer.scrollIntoView("{behavior: \"instant\", block: \"center\", inline: \"center\"}");
+        rentPage.pricesContainer.scrollIntoView("{behavior: \"instant\", block: \"center\", inline: \"center\"}");
         return this;
     }
-    @Step
+    @Step("set min price: {price}")
     public RentSteps setMinPrice(String price) {
         rentPage.minPriceInput.setValue(price);
         return this;
     }
 
 
-    @Step
+    @Step("set max price: {price}")
     public RentSteps setMaxPrice(String price) {
         rentPage.maxPriceInput.setValue(price);
         return this;
     }
 
-    @Step
+    @Step("click on search button")
     public RentSteps clickOnSearchButton() {
-        $(".category-filter-desk .submit-form .submit-button").click();
+        rentPage.searchButton.click();
         return this;
     }
 
-    @Step
+    @Step("validate elements price range")
     public RentSteps validateElementsPriceRange() {
-        ElementsCollection rentOffers = rentPage.rentOffers;
-        By priceLocator = rentPage.priceLocator;
+       rentPage.offersPrices.stream().forEach(offer -> {
+           int price = Helper.parseStringToInt(offer.getText());
 
-        rentOffers.stream().forEach(offer -> {
-            String priceText = offer.$(priceLocator).getText();
-            System.out.println(priceText + "---------");
-        });
+           Assert.assertTrue(price >= 200 && price <=230, "Price must be between 200 and 230, but it is: " + price);
+       });
+
         return this;
     }
 

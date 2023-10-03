@@ -11,20 +11,20 @@ public class SushiOffersSteps {
     SushiOffersPage sushiOffersPage = new SushiOffersPage();
     SoftAssert softAssert = new SoftAssert();
 
-    @Step
+    @Step("add first time to favorites")
     public SushiOffersSteps addFirstItemToFavorites() {
         sushiOffersPage.sushiOffers.get(0).$(sushiOffersPage.favoriteIcon).click();
         return this;
     }
 
-    @Step
+    @Step("verify login window appearance")
     public SushiOffersSteps verifyLoginWindowAppearance() {
         sushiOffersPage.loginWindow.should(Condition.appear);
         sushiOffersPage.windowCloseButton.click();
         return this;
     }
 
-    @Step
+    @Step("check that vouchers are not sold out")
     public SushiOffersSteps checkVouchersAreNotSoldOut() {
         ElementsCollection sushiOffers = sushiOffersPage.sushiOffers;
         By voucherDiagram = sushiOffersPage.voucherDiagram;
@@ -39,13 +39,13 @@ public class SushiOffersSteps {
         return this;
     }
 
-    @Step
+    @Step("sort elements by price decreasing")
     public SushiOffersSteps sortElementsByPriceDecreasing() {
         sushiOffersPage.sortDropDown.selectOption("ფასით კლებადი");
         return this;
     }
 
-    @Step
+    @Step("verify prices")
     public SushiOffersSteps verifyPrices() {
         String firstOfferPriceText = sushiOffersPage.sushiOffers.get(0).$(sushiOffersPage.sushiPrice).getText();
         String secondOfferPriceText = sushiOffersPage.sushiOffers.get(1).$(sushiOffersPage.sushiPrice).getText();
@@ -62,7 +62,7 @@ public class SushiOffersSteps {
         return this;
     }
 
-    @Step
+    @Step("click on first offer")
     public SushiOffersSteps clickOnFirstOffer() {
         sushiOffersPage.sushiOffers.first().click();
         return this;

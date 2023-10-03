@@ -19,7 +19,7 @@ public class DbSteps {
     }
 
 
-    @Step
+    @Step("insert new user into users table")
     public DbSteps insertNewUser() {
         String insertQuery = "INSERT INTO users (firstName, lastName, email, phone, dateOfBirth, password) VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -41,7 +41,7 @@ public class DbSteps {
         return this;
     }
 
-    @Step
+    @Step("get inserted user data from database")
     public UserData getUserDataFromDb() {
         UserData userData = new UserData();
 

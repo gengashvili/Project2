@@ -43,13 +43,13 @@ public class SignUpSteps {
         return this;
     }
 
-    @Step("set password")//რეალური პროექტის ტესტირებისას ალბათ პაროლის რეპორტში გამოჩენა არ იქნებოდა მიზანშეწონილი და აქაც არ დავლოგავ:))
+    @Step("set password: {password}")
     public SignUpSteps setPassword(String password) {
         signUpPage.passwordInput.setValue(password);
         return this;
     }
 
-    @Step("set confirm password")// არც აქ:დ
+    @Step("set confirm password: {confirmPassword}")
     public SignUpSteps setConfirmPassword(String confirmPassword) {
         signUpPage.confirmPasswordInput.setValue(confirmPassword);
         return this;
@@ -67,7 +67,7 @@ public class SignUpSteps {
         return this;
     }
 
-    @Step
+    @Step("validate error message")
     public SignUpSteps validateErrorMessage() {
         String actualErrorMessage = signUpPage.errorElement.getText();
         String expectedErrorMessage = "გთხოვთ აირჩიოთ სქესი!";

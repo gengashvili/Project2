@@ -10,13 +10,13 @@ import static com.codeborne.selenide.Selenide.*;
 public class SushiSteps {
     SushiPage sushiPage = new SushiPage();
 
-    @Step
+    @Step("click on share")
     public SushiSteps clickOnShare() {
         sushiPage.shareIcon.click();
         return this;
     }
 
-    @Step
+    @Step("validate facebook window appeared")
     public SushiSteps validateFacebookWindowAppeared() {
         switchTo().window(1);
 
