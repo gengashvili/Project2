@@ -41,22 +41,5 @@ public class DbSteps {
         return this;
     }
 
-    @Step("get inserted user data from database")
-    public UserData getUserDataFromDb() {
-        UserData userData = new UserData();
 
-        String selectQuery = "SELECT TOP 1 * FROM users ORDER BY id DESC";
-
-        try (PreparedStatement selectStatement = connection.prepareStatement(selectQuery)) {
-            ResultSet resultSet = selectStatement.executeQuery();
-
-            if (resultSet.next()) {
-
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-        return userData;
-    }
 }
