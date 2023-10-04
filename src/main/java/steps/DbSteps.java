@@ -3,16 +3,22 @@ package steps;
 import data.UserData;
 import io.qameta.allure.Step;
 import utils.DatabaseConnection;
+import utils.SqlQueries;
 
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DbSteps {
-    private UserData userData = new UserData();
     private Connection connection;
+    private SqlQueries sqlQueries;
+    private int insertedUserId = 0;
+
 
     public DbSteps() {
         try {
             this.connection = DatabaseConnection.getConnection();
+            this.sqlQueries = new SqlQueries(connection);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -21,25 +27,40 @@ public class DbSteps {
 
     @Step("insert new user into users table")
     public DbSteps insertNewUser() {
-        String insertQuery = "INSERT INTO users (firstName, lastName, email, phone, dateOfBirth, password) VALUES (?, ?, ?, ?, ?, ?)";
+        UserData userData = new UserData();
 
-        try(PreparedStatement insertStatement = connection.prepareStatement(insertQuery)) {
-
-            insertStatement.setString(1, userData.firstName);
-            insertStatement.setString(2, userData.lastName);
-            insertStatement.setString(3, userData.email);
-            insertStatement.setString(4, userData.phone);
-            insertStatement.setDate(5, userData.dateOfBirth);
-            insertStatement.setString(6, userData.password);
-
-            insertStatement.executeUpdate();
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+        insertedUserId = sqlQueries.insertNewUser(
+                userData.getFirstName(),
+                userData.getLastName(),
+                userData.getPhone(),
+                userData.getEmail(),
+                userData.getDateOfBirth(),
+                userData.getPassword()
+        );
 
         return this;
     }
 
+    @Step
+    public UserData getInsertedUserFromDb() {
+        UserData userData = new UserData();
+
+        ResultSet resultSet = sqlQueries.getUserDataFromDb(insertedUserId);
+
+        try {
+            if (resultSet.next()) {
+                userData.setFirstName(resultSet.getString("firstName"));
+                userData.setLastName( resultSet.getString("lastName"));
+                userData.setPhone( resultSet.getString("phone"));
+                userData.setEmail(resultSet.getString("email"));
+                userData.setDateOfBirth(resultSet.getDate("dateOfBirth"));
+                userData.setPassword( resultSet.getString("password"));
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return userData;
+    }
 
 }

@@ -18,6 +18,7 @@ public class RentSteps {
         rentPage.pricesContainer.scrollIntoView("{behavior: \"instant\", block: \"center\", inline: \"center\"}");
         return this;
     }
+
     @Step("set min price: {price}")
     public RentSteps setMinPrice(String price) {
         rentPage.minPriceInput.setValue(price);

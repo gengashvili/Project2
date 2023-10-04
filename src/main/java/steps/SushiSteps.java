@@ -2,6 +2,7 @@ package steps;
 
 import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Step;
+import org.bouncycastle.oer.Switch;
 import org.testng.Assert;
 import pages.SushiPage;
 
@@ -21,7 +22,9 @@ public class SushiSteps {
         switchTo().window(1);
 
         String newTabTitle = Selenide.title();
+
         closeWindow();
+        switchTo().window(0);
 
         Assert.assertEquals(newTabTitle, "Facebook");
         return this;
