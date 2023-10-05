@@ -34,7 +34,9 @@ public class SushiOffersSteps {
             softAssert.assertNotEquals(dataWidth, "100");
         });
 
+        //assertAll afterMethod შიც შეიძლება დაწერილიყო, მაგრამ მერე afterMethod ფეილდება და არა სტეპი, და სტეპში როცა წერია ალურეს რეპორტში უკეთ ჩანს ერორები, თავისი სქრინშოთებით:))
         softAssert.assertAll();
+
 
         return this;
     }

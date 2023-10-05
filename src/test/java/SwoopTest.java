@@ -1,13 +1,8 @@
 import data.UserData;
-import utils.Helper;
-import utils.ScreenshotListener;
-import utils.TestConfig;
+import utils.*;
 import io.qameta.allure.*;
 import org.testng.annotations.*;
 import steps.*;
-
-import java.sql.Date;
-import java.util.Map;
 
 
 @Epic("final project 2")
@@ -130,6 +125,7 @@ public class SwoopTest extends TestConfig {
 
         dbSteps.insertNewUser();
         UserData userData = dbSteps.getInsertedUserFromDb();
+        dbSteps.deleteInsertedUser();
 
         headerSteps.clickOnSignIn();
 

@@ -29,8 +29,7 @@ public class SqlQueries {
 
             try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    int userId = generatedKeys.getInt(1);
-                    System.out.println(userId);
+                    insertedUserId = generatedKeys.getInt(1);
                 } else {
                     throw new SQLException("inserting user failed");
                 }
@@ -56,5 +55,19 @@ public class SqlQueries {
         }
 
         return resultSet;
+    }
+
+    public void deleteInsertedUser(int insertedUserId) {
+        String deleteQuery = "DELETE FROM users WHERE id = ?";
+        PreparedStatement deleteStatement = null;
+
+        try {
+            deleteStatement = connection.prepareStatement(deleteQuery);
+            deleteStatement.setInt(1, insertedUserId);
+            deleteStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 }

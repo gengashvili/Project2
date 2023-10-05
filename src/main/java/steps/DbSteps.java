@@ -6,13 +6,11 @@ import utils.DatabaseConnection;
 import utils.SqlQueries;
 
 import java.sql.*;
-import java.util.HashMap;
-import java.util.Map;
 
 public class DbSteps {
     private Connection connection;
     private SqlQueries sqlQueries;
-    private int insertedUserId = 0;
+    private static int insertedUserId = 0;
 
 
     public DbSteps() {
@@ -41,7 +39,7 @@ public class DbSteps {
         return this;
     }
 
-    @Step
+    @Step("get inserted user data from db and set data into userData class")
     public UserData getInsertedUserFromDb() {
         UserData userData = new UserData();
 
@@ -61,6 +59,14 @@ public class DbSteps {
             System.out.println(e.getMessage());
         }
         return userData;
+    }
+
+    @Step("delete inserted user")
+    public DbSteps deleteInsertedUser() {
+
+        System.out.println(insertedUserId);
+        sqlQueries.deleteInsertedUser(insertedUserId);
+        return this;
     }
 
 }
