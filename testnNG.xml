@@ -1,0 +1,28 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Parallel Group Tests" parallel="tests">
+
+    <test name="Regression1">
+        <groups>
+            <run>
+                <include name="Regression1"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="utils.TestConfig"/>
+            <class name="SwoopTest"/>
+        </classes>
+    </test>
+
+    <test name="Regression2">
+        <groups>
+            <run>
+                <include name="Regression2"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="utils.TestConfig"/>
+            <class name="SwoopTest"/>
+        </classes>
+    </test>
+</suite>
